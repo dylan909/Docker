@@ -16,6 +16,7 @@ Quick glosary:
 - Docker containers or just containers: A container is a instanace of the image running on a virtualised virtual machine. Containers do not have their own virtual machines, they have a copy of the virtual machine they're running on.
 - Docker host or just host: The host is the machine docker is running on. This can be a computer or server etc.
 - Docker hub: A place to store and distribute images, a repository. Also you can find templates to use.
+- Dockerfile - A Dockerfile is simply a text-based file with no file extension that contains a script of instructions. Docker uses this script to build a container image.
 
 
 ## **Use Case**
@@ -35,3 +36,108 @@ We can use DOCKER. Docker will create a image of the repository and then use tha
 ![image](https://github.com/dylan909/Docker/assets/73878448/ed891556-913e-4ba9-8925-15536d7f82eb)
 
 ## Things I learned 
+
+There's limited things i can add code in reguards to docker as a lot of the process is though the CLI or app. So i'll add the commands i did along with what the Docker file is.
+
+### Building a Docker image
+
+We're building a docker image and to do this we'll need a docker file. We'll add the dockerfile (which is just docker no extensions) to the root level of the project. 
+
+```
+# syntax=docker/dockerfile:1              // This is a special instruction called a "build-time pragma." It's used to specify the syntax version for the Dockerfile.
+FROM node:18-alpine              // This is is the starting point. The base image. FROM here meaning we're going to start the base image from this one. And node:18-alpine the version of node with the Alpine Linux distribution as its base.
+WORKDIR /app                    // The WORKDIR instruction in a Dockerfile sets the working directory for any subsequent instructions in the Dockerfile. It means that the working directory for the container will be set to /app. 
+COPY . .                     // The instruction COPY . . in a Dockerfile is used to copy files from the current directory (on the host machine, where the Docker build context is located) into the working directory of the container. it's format is COPY <src> <dest>.
+RUN yarn install --production                 // The RUN instruction in a Dockerfile is used to execute commands during the image build process. This means the command yarn install will be ran but only for the production dependacies
+CMD ["node", "src/index.js"]                 // The CMD instruction in a Dockerfile is used to specify the default command that should be executed when a container is started based on the Docker image. This means it will run node in the src/index.js file.
+EXPOSE 3000                     // THIS DOES NOT PUBLISH THE PORT 3000. This is purely for documentation purposes, for yourself and for future devs.
+```
+
+This is what a Dockerfile could look like. ^
+
+
+Once you have this file. `cd` to your project root and run the command
+
+> `docker build -t <project name> .`
+
+This builds the image of your repository, it builds it from the dockerfile. If you don't have the base image downloaded docker will automatically download it for you.
+
+- the `-t` is not necessary however it allows you to tag your image with your own naming 👍
+-
+- The . at the end of the docker build command tells Docker that it should look for the Dockerfile in the current directory
+
+This builds the image of your repository, it builds it from the dockerfile. If you don't have the base image downloaded docker will automatically download it for you.
+
+###  NOW BUILT YOU CAN START IT
+
+> `docker run -dp 127.0.0.1:3000:3000 <project name>`
+
+- the `-d` allows the docker to run in the background
+- The `-p` flag creates a port mapping between the host and the container. The -p flag takes a string value in the format of HOST:CONTAINER, where HOST is the address on the host, and CONTAINER is the port on the container.
+- You could now visit your project @ http://localhost:3000/
+
+### Listing all running images
+
+> `Docker ps`
+
+This will list all of the current running images. It give's you a couple of columns of data
+
+### Stoping and removing.
+
+if you update the image and  re-build and re-run it. It wouldn't allow you to. You need to delete the past image to do that.
+
+> `docker stop <the-container-id>`
+> This will stop the container
+
+> `docker rm <the-container-id>`
+> This will delete the container
+
+> `docker rm -f <the-container-id>`
+> Alternatively and quickier you can stop and remove the container in one blow. the `-f` here means force.
+
+### How to not lose local data
+
+**Problem**
+
+An issue you might have when running a project locally is the local databases you have not sharing any data between containers and the data not existing after the container has been deleted/stopped.
+
+**Solution**
+
+Docker Mounts
+
+
+1. **Volume mounts**
+
+Volumes provide the ability to connect specific filesystem paths of the container back to the host machine.
+
+> `docker volume create todo-db`
+> This is going to create a volume called todo-db
+
+> `docker run -dp 127.0.0.1:3000:3000 --mount type=volume,src=todo-db,target=/etc/todos <project name>`
+> Here we're running the same `docker run` command but with a flag `--mount` which you specify the type of mount, src - the place where you're adding the volume from and src the place where you're persisting the data.
+
+2. **Bind Mounts**
+
+A bind mount is another type of mount, which lets you share a directory from the host’s filesystem into the container. When working on an application, you can use a bind mount to mount source code into the container. The container sees the changes you make to the code immediately, as soon as you save a file. This means that you can run processes in the container that watch for filesystem changes and respond to them.
+
+A great use case for bind mounts is to make development containers. The advantage is that the development machine doesn’t need to have all of the build tools and environments installed. With a single docker run command, Docker pulls dependencies and tools.
+
+This is about to be a hefty command you have been warned.
+
+> ```
+> docker run -dp 127.0.0.1:3000:3000 \
+> -w /app --mount type=bind,src="$(pwd)",target=/app \
+> node:18-alpine \
+> sh -c "yarn install && yarn run dev"
+> ```
+>
+> The docker run command is the same as previously
+> `-w /app` is the directory the where the command will be ran from
+> `--mount type=bind,src="$(pwd)",target=/app` bind mount the current directory from the host into the /app directory in the container
+> `node:18-alpine` - the image to use
+> `sh -c "yarn install && yarn run dev` The shell command runs those two commands. One that will install the dependancies and one that runs the server (preferably on nodemon)
+>
+> From here you can watch nodemon log all it's info in the console
+
+### Multi-container app's
+
