@@ -1,12 +1,12 @@
 # **This is a repository i made to lean about docker**
 
-[DESCRIPTION](#description) 
+[DESCRIPTION](#Description) 
 <br>
-[USE CASE](#use-case) 
+[USE CASE](#Use-Case) 
 <br>
-[THINGS I LEARNED](#things-i-learned) 
+[THINGS I LEARNED](#Things-i-learned) 
 
-## **Description** <a href="#description">#</a>
+## **Description** 
 
 *Docker is a way to containerize applications to build, manage and run easier.* It does this by building a virtual machine. A virtual machine is virtualized computer, it can do anything a computer can do, such as running applications and a OS. 
 
@@ -18,7 +18,7 @@ Quick glosary:
 - Docker hub: A place to store and distribute images, a repository. Also you can find templates to use.
 
 
-## **Use Case** <a href="#use-case">#</a>
+## **Use Case**
 
 ### *Problem*
 
@@ -34,4 +34,4 @@ We can use DOCKER. Docker will create a image of the repository and then use tha
 
 ![image](https://github.com/dylan909/Docker/assets/73878448/ed891556-913e-4ba9-8925-15536d7f82eb)
 
-## Things I learned <a href="#things-i-learned">#</a>
+## Things I learned 
