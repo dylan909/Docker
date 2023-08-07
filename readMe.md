@@ -1,7 +1,9 @@
 # **This is a repository i made to lean about docker**
 
 [DESCRIPTION](https://github.com/dylan909/Docker/edit/main/readMe.md#description) 
+
 [USE CASE](https://github.com/dylan909/Docker/edit/main/readMe.md#use-case) 
+
 [THINGS I LEARNED](https://github.com/dylan909/Docker/edit/main/readMe.md#things-i-learned) 
 
 ## **Description** <a href="#description">#</a>
