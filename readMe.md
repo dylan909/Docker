@@ -1,4 +1,4 @@
-# **This is a repository i made to lean about docker**
+# **This is a repository i made to learn about docker**
 
 [DESCRIPTION](#description) 
 <br>
