@@ -1,8 +1,8 @@
 # **This is a repository i made to lean about docker**
 
-[DESCRIPTION](#Description) 
+[DESCRIPTION](#description) 
 <br>
-[USE CASE](#Use-Case) 
+[USE CASE](#use-case) 
 <br>
 [THINGS I LEARNED](#Things-i-learned) 
 
