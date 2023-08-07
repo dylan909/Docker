@@ -4,7 +4,7 @@
 <br>
 [USE CASE](#use-case) 
 <br>
-[THINGS I LEARNED](#Things-i-learned) 
+[THINGS I LEARNED](#things-i-learned) 
 
 ## **Description** 
 
