@@ -1,10 +1,10 @@
 # **This is a repository i made to lean about docker**
 
-[DESCRIPTION](https://github.com/dylan909/Docker#description) 
+[DESCRIPTION](#description) 
 <br>
-[USE CASE](https://github.com/dylan909/Docker#use-case) 
+[USE CASE](#use-case) 
 <br>
-[THINGS I LEARNED](https://github.com/dylan909/Docker#things-i-learned) 
+[THINGS I LEARNED](#things-i-learned) 
 
 ## **Description** <a href="#description">#</a>
 
