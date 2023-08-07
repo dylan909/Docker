@@ -141,3 +141,77 @@ This is about to be a hefty command you have been warned.
 
 ### Multi-container app's
 
+If we want to upgade our database from sqlite to say MySQL, how do we preceed? Do we add it to the current container or make a seperate one. well... In general, each container should do one thing and do it well.
+
+![image](https://github.com/dylan909/Docker/assets/73878448/fed8070f-41c3-4fed-b613-4b30c47fda5a)
+
+So, how do you allow one container to talk to another? The answer is networking. If you place the two containers on the same network, they can talk to each other.
+
+> `docker network create <mysql-container-id>`
+> Firstly, we need to create the network.
+
+>```
+>docker run -d \
+>--network <mysql-container-id> --network-alias mysql \
+>-v todo-mysql-data:/var/lib/mysql \
+>-e MYSQL_ROOT_PASSWORD=secret \
+>-e MYSQL_DATABASE=todos \
+>mysql:8.0
+>```
+>
+> This is running the network and then setting a `--network-alias`, a alias allows other containers in the same Docker network to access the container using the specified name instead of its container ID or hostname.
+>
+>The line after the alias provides a volume named todo-mysql-data in the above command that is mounted at /var/lib/mysql, which is where MySQL stores its data. This is why it's started with a `-v`.
+>
+>on the next two lines we're defining enviroment variables, hense `-e`.
+>
+>The last line defines the version of SQL we want.
+
+> `docker exec -it <mysql-container-id> mysql -u root -p`
+> You can check it's working by using this command which will then prompt you to enter your the env password you made
+
+> `SHOW DATABASES;`
+> This will then open a MySQL shell and if you enter this command you should see a database with the name of the env var MYSQL_DATABASE you made.
+
+Now that you know MySQL is up and running, you can use it. But, how do you use it? If you run another container on the same network, how do you find the container? Remember that each container has its own IP address.
+
+To understand how to do this we can use an image called `nicolaka/netshoot` this has a lot of tools we can use. 
+
+> `docker run -it --network <project name> nicolaka/netshoot`
+> `-it` will create an interactive terminal
+> `--network` connects the two of the containers
+
+> `dig mysql`
+> Inside the container, you’re going to use the dig command, which is a useful DNS tool. You’re going to look up the IP address for the hostname mysql
+> You'll basically get an output which will contain the IP. there will be a row called mysql thanks to us earlier when we set a network alias.
+
+**Running my app with SQL**
+The todo app supports the setting of a few environment variables to specify MySQL connection settings. The best ways to set these secrets is through docker swarm or a volume connected to a env file. They are:
+
+MYSQL_HOST - the hostname for the running MySQL server
+MYSQL_USER - the username to use for the connection
+MYSQL_PASSWORD - the password to use for the connection
+MYSQL_DB - the database to use once connected
+
+>```
+>docker run -dp 127.0.0.1:3000:3000 \
+>-w /app -v "$(pwd):/app" \
+>--network <project name> \
+>-e MYSQL_HOST=mysql \
+>-e MYSQL_USER=root \
+>-e MYSQL_PASSWORD=secret \
+>-e MYSQL_DB=todos \
+>node:18-alpine \
+>sh -c "yarn install && yarn run dev"
+>```
+>This will finally connect your DB container to your client-side container.
+
+> docker exec -it <mysql-container-id> mysql -p todos
+
+
+And in the mysql shell, run the following:
+
+> select * from todo_items;
+
+
+
