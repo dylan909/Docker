@@ -1,6 +1,10 @@
 # **This is a repository i made to lean about docker**
 
-## **Description**
+[DESCRIPTION](https://github.com/dylan909/Docker/edit/main/readMe.md#description) 
+[USE CASE](https://github.com/dylan909/Docker/edit/main/readMe.md#use-case) 
+[THINGS I LEARNED](https://github.com/dylan909/Docker/edit/main/readMe.md#things-i-learned) 
+
+## **Description** <a href="#description">#</a>
 
 *Docker is a way to containerize applications to build, manage and run easier.* It does this by building a virtual machine. A virtual machine is virtualized computer, it can do anything a computer can do, such as running applications and a OS. 
 
@@ -12,7 +16,7 @@ Quick glosary:
 - Docker hub: A place to store and distribute images, a repository. Also you can find templates to use.
 
 
-## **Use Case** 
+## **Use Case** <a href="#use-case">#</a>
 
 ### *Problem*
 
@@ -27,3 +31,5 @@ OR
 We can use DOCKER. Docker will create a image of the repository and then use that image to make a container running on the host but customised how you want. As long as they share the same OS family you can create as many containers as you'd like. You can use Docker hub to find a lot of template and a place to store and distribute images.
 
 ![image](https://github.com/dylan909/Docker/assets/73878448/ed891556-913e-4ba9-8925-15536d7f82eb)
+
+## Things I learned <a href="#things-i-learned">#</a>
