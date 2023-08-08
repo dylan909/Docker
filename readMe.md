@@ -37,6 +37,14 @@ We can use DOCKER. Docker will create a image of the repository and then use tha
 
 ## Things I learned 
 
+[Building a docker image](#building-a-docker-image)
+[Starting an image](#starting-an-image)
+[Listing all running containers](#listing-all-runnning-containers)
+[Stoping and removing containers](#stopping-and-removing-cotainers)
+[Multi container apps](#multi-container-apps)
+[Docker compose](#docker-compose)
+
+
 There's limited things i can add code in reguards to docker as a lot of the process is though the CLI or app. So i'll add the commands i did along with what the Docker file is.
 
 ### Building a Docker image
@@ -68,7 +76,7 @@ This builds the image of your repository, it builds it from the dockerfile. If y
 
 This builds the image of your repository, it builds it from the dockerfile. If you don't have the base image downloaded docker will automatically download it for you.
 
-###  NOW BUILT YOU CAN START IT
+###  Starting an image
 
 > `docker run -dp 127.0.0.1:3000:3000 <project name>`
 
@@ -76,13 +84,13 @@ This builds the image of your repository, it builds it from the dockerfile. If y
 - The `-p` flag creates a port mapping between the host and the container. The -p flag takes a string value in the format of HOST:CONTAINER, where HOST is the address on the host, and CONTAINER is the port on the container.
 - You could now visit your project @ http://localhost:3000/
 
-### Listing all running images
+### Listing all running containers
 
 > `Docker ps`
 
 This will list all of the current running images. It give's you a couple of columns of data
 
-### Stoping and removing.
+### Stoping and removing containers
 
 if you update the image and  re-build and re-run it. It wouldn't allow you to. You need to delete the past image to do that.
 
@@ -139,7 +147,7 @@ This is about to be a hefty command you have been warned.
 >
 > From here you can watch nodemon log all it's info in the console
 
-### Multi-container app's
+### Multi container apps
 
 If we want to upgade our database from sqlite to say MySQL, how do we preceed? Do we add it to the current container or make a seperate one. well... In general, each container should do one thing and do it well.
 
@@ -186,6 +194,7 @@ To understand how to do this we can use an image called `nicolaka/netshoot` this
 > You'll basically get an output which will contain the IP. there will be a row called mysql thanks to us earlier when we set a network alias.
 
 **Running my app with SQL**
+
 The todo app supports the setting of a few environment variables to specify MySQL connection settings. The best ways to set these secrets is through docker swarm or a volume connected to a env file. They are:
 
 MYSQL_HOST - the hostname for the running MySQL server
