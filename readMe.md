@@ -215,3 +215,53 @@ And in the mysql shell, run the following:
 
 
 
+
+
+### Docker compose
+
+Docker compose provides a simplier way to create multi container apps. You create a docker-compose.yml at root level with instructions on how you want the network to be composed.
+
+*docker-compose.yml*
+>```
+>services:
+>  app:
+>    image: node:18-alpine
+>    command: sh -c "yarn install && yarn run dev"
+>    ports:
+>      - 127.0.0.1:3000:3000
+>    working_dir: /app
+>    volumes:
+>      - ./:/app
+>    environment:
+>      MYSQL_HOST: mysql
+>      MYSQL_USER: root
+>      MYSQL_PASSWORD: secret
+>      MYSQL_DB: todos
+>
+>  mysql:
+>    image: mysql:8.0
+>    volumes:
+>      - todo-mysql-data:/var/lib/mysql
+>    environment:
+>      MYSQL_ROOT_PASSWORD: secret
+>      MYSQL_DATABASE: todos
+>
+>volumes:
+>  todo-mysql-data:
+>```
+
+That's it, we've made the entire network we made last time in one file.
+
+Now we have that we just need to run 
+> Docker compose up -d
+And we have a network created from one command.
+> Here you can use `docker compose logs -f` to see what's going on internally.
+
+Once we are finished with the network we can use 
+
+> Docker compose down
+
+
+
+
+
