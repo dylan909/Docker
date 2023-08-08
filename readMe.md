@@ -37,12 +37,12 @@ We can use DOCKER. Docker will create a image of the repository and then use tha
 
 ## Things I learned 
 
-[Building a docker image](#building-a-docker-image)
-[Starting an image](#starting-an-image)
-[Listing all running containers](#listing-all-runnning-containers)
-[Stoping and removing containers](#stopping-and-removing-cotainers)
-[Multi container apps](#multi-container-apps)
-[Docker compose](#docker-compose)
+[Building a docker image](#building-a-docker-image)<br>
+[Starting an image](#starting-an-image)<br>
+[Listing all running containers](#listing-all-running-containers)<br>
+[Stopping and removing containers](#stopping-and-removing-containers)<br>
+[Multi container apps](#multi-container-apps)<br>
+[Docker compose](#docker-compose)<br>
 
 
 There's limited things i can add code in reguards to docker as a lot of the process is though the CLI or app. So i'll add the commands i did along with what the Docker file is.
@@ -90,7 +90,7 @@ This builds the image of your repository, it builds it from the dockerfile. If y
 
 This will list all of the current running images. It give's you a couple of columns of data
 
-### Stoping and removing containers
+### Stopping and removing containers
 
 if you update the image and  re-build and re-run it. It wouldn't allow you to. You need to delete the past image to do that.
 
